@@ -17,11 +17,16 @@ const fs = require('fs'); //reading data from filesystem
 
 // NON-BLOCKING, Assynchronous
 
-fs.readFile('./txt/start.txt', 'utf-8', (err, data1) => {
-  fs.readFile(`./txt/${data1}.txt`, 'utf-8', (err, data2) => {
+fs.readFile('./txt/start.txt', 'utf-8', (err, start) => {
+  fs.readFile(`./txt/${start}.txt`, 'utf-8', (err, data2) => {
     console.log(data2);
     fs.readFile(`./txt/append.txt`, 'utf-8', (err, data3) => {
       console.log(data3);
+
+      fs.writeFile('./final.txt', `${data2}\n\n${data3}`, 'utf-8', (err) => {
+        if (err) console.log(err);
+        console.log("\nFile has been written!");
+      });
     });
   });
 });
