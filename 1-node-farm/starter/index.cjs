@@ -1,6 +1,7 @@
+const fs = require('fs'); //reading data from filesystem
+
 // BLOCKING, Synchronous
 
-const fs = require('fs'); //reading data from filesystem
 // // Displaying text input from file
 // const textInput = fs.readFileSync('./txt/input.txt', 'utf-8');
 // // Get the current timestamp
@@ -17,7 +18,8 @@ const fs = require('fs'); //reading data from filesystem
 
 // NON-BLOCKING, Assynchronous
 
-fs.readFile('./txt/start.txt', 'utf-8', (err, start) => {
+fs.readFile('./txt/startt.txt', 'utf-8', (err, start) => {
+  if (err) return console.log(`ERROR: ${err}`);
   fs.readFile(`./txt/${start}.txt`, 'utf-8', (err, data2) => {
     console.log(data2);
     fs.readFile(`./txt/append.txt`, 'utf-8', (err, data3) => {
@@ -25,10 +27,8 @@ fs.readFile('./txt/start.txt', 'utf-8', (err, start) => {
 
       fs.writeFile('./final.txt', `${data2}\n\n${data3}`, 'utf-8', (err) => {
         if (err) console.log(err);
-        console.log("\nFile has been written!");
+        console.log('\nFile has been written!');
       });
     });
   });
 });
-
-console.log('will read file');
