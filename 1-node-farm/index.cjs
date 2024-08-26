@@ -1,9 +1,10 @@
-const fs = require('fs'); // reading data from filesystem
+const fs = require('fs'); // reading and writing data from filesystem
 const http = require('http'); // building an http server
+// const url = require('url'); // creating routes
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//                           FILES
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+//                           FILES                               //
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 // BLOCKING, Synchronous
 
@@ -38,14 +39,20 @@ const http = require('http'); // building an http server
 //   });
 // });
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//                           SERVER
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+//                           SERVER                              //
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 const PORT = 8080;
 const hostName = '127.0.0.1';
 
 const server = http.createServer((req, res) => {
-  res.end('App: reviewing Node http server');
+  console.log(req.url);
+  // routing
+  const pathName = req.url;
+
+  if (pathName === '/overview') res.end('Overview');
+  if (pathName === '/products') res.end('Products');
+  if (pathName === '/') res.end('App: reviewing Node http server');
 });
 
 server.listen(PORT, hostName, () => {
