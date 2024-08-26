@@ -53,8 +53,11 @@ const server = http.createServer((req, res) => {
   if (pathName === '/overview' || pathName === '/') res.end('Overview');
   if (pathName === '/products') res.end('Products');
   if (pathName === '/about') res.end('App: reviewing Node http server');
-  res.writeHead(404);
-  res.end('404: Page not found');
+  res.writeHead(404, {
+    'Content-Type': 'text/html',
+    // 'Content-Type': 'application/json',
+  });
+  res.end('<h1>404: Page not found</h1>');
 });
 
 server.listen(PORT, hostName, () => {
