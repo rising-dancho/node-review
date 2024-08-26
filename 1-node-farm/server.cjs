@@ -47,17 +47,26 @@ const hostName = '127.0.0.1';
 
 const server = http.createServer((req, res) => {
   console.log(req.url);
+
   // routing
   const pathName = req.url;
 
-  if (pathName === '/overview' || pathName === '/') res.end('Overview');
-  if (pathName === '/products') res.end('Products');
-  if (pathName === '/about') res.end('App: reviewing Node http server');
-  res.writeHead(404, {
-    'Content-Type': 'text/html',
-    // 'Content-Type': 'application/json',
-  });
-  res.end('<h1>404: Page not found</h1>');
+  if (pathName === '/overview' || pathName === '/') res.end('OVERVIEW');
+  else if (pathName === '/products') res.end('PRODUCTS');
+  else if (pathName === '/about') res.end('App: reviewing Node http server');
+  else if (pathName === '/api') {
+    fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
+      if (err) res.end(err);
+      const productData = JSON.parse(data);
+      console.log(productData);
+      res.end(data);
+    });
+  } else {
+    res.writeHead(404, {
+      'Content-Type': 'text/html',
+    });
+    res.end('<h1>404: Page not found</h1>');
+  }
 });
 
 server.listen(PORT, hostName, () => {
