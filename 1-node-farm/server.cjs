@@ -45,6 +45,9 @@ const http = require('http'); // building an http server
 const PORT = 8080;
 const hostName = '127.0.0.1';
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+const dataObj = JSON.parse(data); // JSON.parse: parses  the json into a javascript object
+
 const server = http.createServer((req, res) => {
   console.log(req.url);
 
@@ -55,12 +58,10 @@ const server = http.createServer((req, res) => {
   else if (pathName === '/products') res.end('PRODUCTS');
   else if (pathName === '/about') res.end('App: reviewing Node http server');
   else if (pathName === '/api') {
-    fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
-      if (err) res.end(err);
-      const productData = JSON.parse(data);
-      console.log(productData);
-      res.end(data);
+    res.writeHead(404, {
+      'Content-Type': 'application/json',
     });
+    res.end(data);
   } else {
     res.writeHead(404, {
       'Content-Type': 'text/html',
