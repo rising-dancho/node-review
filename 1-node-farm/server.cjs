@@ -1,6 +1,6 @@
 const fs = require('fs'); // reading and writing data from filesystem
 const http = require('http'); // building an http server
-// const url = require('url'); // creating routes
+const url = require('url'); // for getting paths and query options
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 //                           FILES                               //
@@ -80,13 +80,11 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data); // JSON.parse: parses  the json into a javascript object
 
 const server = http.createServer((req, res) => {
-  console.log(req.url);
+  const { query, pathname } = url.parse(req.url, true); // parsing the variables out of the url. param: true -> changes the query from "string" into an "object"
 
   // routing
-  const pathName = req.url;
-
   // Overview page
-  if (pathName === '/overview' || pathName === '/') {
+  if (pathname === '/overview' || pathname === '/') {
     res.writeHead(200, {
       'Content-Type': 'text/html',
     });
@@ -101,12 +99,18 @@ const server = http.createServer((req, res) => {
   }
 
   // Product page
-  else if (pathName === '/products') {
-    res.end('PRODUCTS');
+  else if (pathname === '/product') {
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+    });
+    const product = dataObj[query.id];
+    const output = replaceTemplate(tempProduct, product);
+    // res.end(`Product Item: ${query.id}`);
+    res.end(output);
   }
 
   // API page
-  else if (pathName === '/api') {
+  else if (pathname === '/api') {
     res.writeHead(200, {
       'Content-Type': 'application/json',
     });
@@ -114,7 +118,7 @@ const server = http.createServer((req, res) => {
   }
 
   // About page
-  else if (pathName === '/about') {
+  else if (pathname === '/about') {
     res.end('App: reviewing Node http server');
   }
 
