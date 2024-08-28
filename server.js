@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 8080; // Use the port from the environment variable or default to 8080
-const hostName = '127.0.0.1';
+const HOST = '0.0.0.0';
 
 function replaceTemplate(template, productObj) {
   let output = template.replace(/{%PRODUCT_NAME%}/g, productObj.productName);
@@ -78,6 +78,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(PORT, hostName, () => {
+server.listen(PORT, HOST, () => {
   console.log(`Server is listening for requests on port ${PORT}`);
 });
