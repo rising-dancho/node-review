@@ -45,6 +45,37 @@ const http = require('http'); // building an http server
 const PORT = 8080;
 const hostName = '127.0.0.1';
 
+function replaceTemplate(template, productObj) {
+  let output = template.replace(/{%PRODUCT_NAME%}/g, productObj.productName);
+  output = output.replace(/{%IMAGE%}/g, productObj.image);
+  output = output.replace(/{%FROM%}/g, productObj.from);
+  output = output.replace(/{%NUTRIENTS%}/g, productObj.nutrients);
+  output = output.replace(/{%QUANTITY%}/g, productObj.quantity);
+  output = output.replace(/{%PRICE%}/g, productObj.price);
+  output = output.replace(/{%ORGANIC%}/g, productObj.organic);
+  output = output.replace(/{%DESCRIPTION%}/g, productObj.description);
+  output = output.replace(/{%ID%}/g, productObj.id);
+  if (!productObj.organic) {
+    output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
+  } else {
+    output = output.replace(/{%NOT_ORGANIC%}/g, '');
+  }
+
+  return output;
+}
+
+const tempOverview = fs.readFileSync(
+  `${__dirname}/templates/template-overview.html`,
+  'utf-8'
+);
+const tempProduct = fs.readFileSync(
+  `${__dirname}/templates/template-product.html`,
+  'utf-8'
+);
+const tempCard = fs.readFileSync(
+  `${__dirname}/templates/template-card.html`,
+  'utf-8'
+);
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data); // JSON.parse: parses  the json into a javascript object
 
@@ -54,15 +85,41 @@ const server = http.createServer((req, res) => {
   // routing
   const pathName = req.url;
 
-  if (pathName === '/overview' || pathName === '/') res.end('OVERVIEW');
-  else if (pathName === '/products') res.end('PRODUCTS');
-  else if (pathName === '/about') res.end('App: reviewing Node http server');
+  // Overview page
+  if (pathName === '/overview' || pathName === '/') {
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+    });
+
+    const cardsHtml = dataObj
+      .map((element) => replaceTemplate(tempCard, element))
+      .join('');
+    const output = tempOverview.replace('{%PRODUCT_CARDS%}', cardsHtml);
+
+    // console.log(cardsHtml);
+    res.end(output);
+  }
+
+  // Product page
+  else if (pathName === '/products') {
+    res.end('PRODUCTS');
+  }
+
+  // API page
   else if (pathName === '/api') {
-    res.writeHead(404, {
+    res.writeHead(200, {
       'Content-Type': 'application/json',
     });
     res.end(data);
-  } else {
+  }
+
+  // About page
+  else if (pathName === '/about') {
+    res.end('App: reviewing Node http server');
+  }
+
+  // Not found page
+  else {
     res.writeHead(404, {
       'Content-Type': 'text/html',
     });
