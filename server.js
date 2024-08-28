@@ -1,6 +1,12 @@
 import fs from 'fs'; // reading and writing data from filesystem
 import http from 'http'; // building an http server
 import url from 'url'; // for getting paths and query options
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 //                           FILES                               //
