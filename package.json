@@ -4,6 +4,7 @@
   "description": "review for node, backend",
   "main": "server.cjs",
   "scripts": {
+    "start": "node server.cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
