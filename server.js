@@ -3,7 +3,10 @@ import http from 'http'; // building an http server
 import url from 'url'; // for getting paths and query options
 import { fileURLToPath } from 'url';
 import path from 'path';
+import dotenv from 'dotenv';
 
+// Load environment variables from .env file
+dotenv.config();
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,7 +51,7 @@ const __dirname = path.dirname(__filename);
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 //                           SERVER                              //
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const hostName = '127.0.0.1';
 
 function replaceTemplate(template, productObj) {
