@@ -1,3 +1,4 @@
+import fs from 'fs';
 import http from 'http';
 import url from 'url';
 import { fileURLToPath } from 'url';
@@ -14,7 +15,42 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 8080; // Use the port from the environment variable or default to 8080
 const hostName = '127.0.0.1';
 
-// Your replaceTemplate function and other code...
+function replaceTemplate(template, productObj) {
+  let output = template.replace(/{%PRODUCT_NAME%}/g, productObj.productName);
+  output = output.replace(/{%IMAGE%}/g, productObj.image);
+  output = output.replace(/{%FROM%}/g, productObj.from);
+  output = output.replace(/{%NUTRIENTS%}/g, productObj.nutrients);
+  output = output.replace(/{%QUANTITY%}/g, productObj.quantity);
+  output = output.replace(/{%PRICE%}/g, productObj.price);
+  output = output.replace(/{%ORGANIC%}/g, productObj.organic);
+  output = output.replace(/{%DESCRIPTION%}/g, productObj.description);
+  output = output.replace(/{%ID%}/g, productObj.id);
+  if (!productObj.organic) {
+    output = output.replace(/{%NOT_ORGANIC%}/g, 'not-organic');
+  } else {
+    output = output.replace(/{%NOT_ORGANIC%}/g, '');
+  }
+
+  return output;
+}
+
+const tempOverview = fs.readFileSync(
+  path.join(__dirname, 'templates', 'template-overview.html'),
+  'utf-8'
+);
+const tempProduct = fs.readFileSync(
+  path.join(__dirname, 'templates', 'template-product.html'),
+  'utf-8'
+);
+const tempCard = fs.readFileSync(
+  path.join(__dirname, 'templates', 'template-card.html'),
+  'utf-8'
+);
+const data = fs.readFileSync(
+  path.join(__dirname, 'dev-data', 'data.json'),
+  'utf-8'
+);
+const dataObj = JSON.parse(data);
 
 const server = http.createServer((req, res) => {
   const { query, pathname } = url.parse(req.url, true);
