@@ -1,6 +1,6 @@
-const fs = require('fs'); // reading and writing data from filesystem
-const http = require('http'); // building an http server
-const url = require('url'); // for getting paths and query options
+import fs from 'fs'; // reading and writing data from filesystem
+import http from 'http'; // building an http server
+import url from 'url'; // for getting paths and query options
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 //                           FILES                               //
