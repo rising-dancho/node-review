@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import dotenv from 'dotenv';
 import replaceTemplate from './modules/replaceTemplates.js';
+import slugify from 'slugify';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -15,6 +16,10 @@ const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 8080; // Use the port from the environment variable or default to 8080
 const HOST = '0.0.0.0';
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+//                           SERVER                              //
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 
 const tempOverview = fs.readFileSync(
   path.join(__dirname, 'templates', 'template-overview.html'),
@@ -33,6 +38,10 @@ const data = fs.readFileSync(
   'utf-8'
 );
 const dataObj = JSON.parse(data);
+
+// create slugs for that can be used for more meaningful url queries options
+const slugs = dataObj.map((item) => slugify(item.productName, { lower: true }));
+console.log(slugs);
 
 const server = http.createServer((req, res) => {
   const { query, pathname } = url.parse(req.url, true);
