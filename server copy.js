@@ -52,7 +52,7 @@ const __dirname = path.dirname(__filename);
 //                           SERVER                              //
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
 const PORT = process.env.PORT || 8080;
-const hostName = '127.0.0.1';
+const hostName = '0.0.0.0';
 
 function replaceTemplate(template, productObj) {
   let output = template.replace(/{%PRODUCT_NAME%}/g, productObj.productName);
