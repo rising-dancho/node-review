@@ -4,7 +4,7 @@ deployed on render since vercel for some reason is not deploying pure node.js ap
 now, since it is deployed on render.. loading this site will be painfully slow. so pls bear with me if and when you try to visit it
 
 EDIT (9/8/2024):
-finally figured out how to deploy backend on verlce, here's the demo..
+finally figured out how to deploy backend on vercel, here's the demo..
 
 deployed on vercel demo: https://review-node-farm.vercel.app/overview
 
