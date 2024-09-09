@@ -33,6 +33,7 @@ Explanation:
 - routes: Tells Vercel to route all requests (including /about) to server.js, where your Express server will handle them.
 
 reference: https://chatgpt.com/share/5c65c21a-27be-420a-955d-66babc660f58
+
 about "builds" being a legacy "legacy" approach: 
 - checking the documentation, they don't recommend using "builds" anymore but instead suggests a newer more granular approach called "functions" however.. functions are made for "serverless" applications.. like the ones deployed using amazon aws.
 - but since we are just using a regular mern stack application that is using express.. this "legacy" approach is fine and is still supported. vercel seems to just be pushing for serverless the approach which we are not doing right now
