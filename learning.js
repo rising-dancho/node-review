@@ -1,5 +1,10 @@
 import fs from 'fs';
 
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+//                     READ AND WRITE FILES                      `//
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< //
+
 const text = fs.readFileSync('./txt/input.txt', 'utf-8');
 console.log(text);
 
