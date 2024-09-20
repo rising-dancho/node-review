@@ -2,7 +2,8 @@
   "name": "review",
   "version": "1.0.0",
   "description": "review for node, backend",
-  "main": "server.js",
+  "main_orig": "server.js",
+  "main": "learning.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
