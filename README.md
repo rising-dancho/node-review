@@ -9,7 +9,7 @@ finally figured out how to deploy backend on vercel, here's the demo..
 deployed on vercel demo: https://review-node-farm.vercel.app/overview
 
 
-just needed to create a vercel.json file that includes:
+just needed to create a vercel.json (in the root directory) file that includes:
 
 ```javascript
 {
